@@ -2,7 +2,6 @@
 import EventsCuoreselSection from "@/components/shared/EventsCuoreselSection";
 import { EventData } from "@/lib/data/eventsData";
 import { IEvent } from "@/lib/interfaces/IEventsData";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useEffect, useState } from "react";
 
 

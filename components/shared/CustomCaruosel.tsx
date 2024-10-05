@@ -1,16 +1,14 @@
 import React from 'react'
 
-import { Card, CardContent } from "@/components/ui/card"
 import {
     Carousel,
     CarouselContent,
-    CarouselItem,
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
 
 
-const CustomCaruosel = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+const CustomCaruosel = ({ children }: { children: React.ReactNode }) => {
     return (
         <Carousel
             opts={{

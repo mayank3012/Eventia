@@ -1,4 +1,4 @@
-import { IEvent, IEventsData } from "../interfaces/IEventsData";
+import { IEventsData } from "../interfaces/IEventsData";
 
 
 

@@ -16,7 +16,7 @@ const CustomEventCard = ({ className = "", data }: IProp) => {
             <CardContent className={`p-0 flex items-center justify-center ${className}`}>
                 <div className="flex flex-col">
                     <div className='aspect-video'>
-                        <CldImage src={'eventia/events_banner/sample' || 'eventia/coming-soon'} width={500} height={500} alt={data.title} className='h-full' priority={true} ></CldImage>
+                        <CldImage src={'eventia/events_banner/sample'} width={500} height={500} alt={data.title} className='h-full' priority={true} ></CldImage>
                     </div>
                     <div className="p-6">
                         <span className="text-3xl font-semibold">{data.title}</span>

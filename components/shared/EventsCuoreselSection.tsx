@@ -10,7 +10,7 @@ const EventsCuoreselSection = ({ Events, SectionHeading = "" }: { Events: IEvent
                 <h2 className="text-2xl text-bold">{SectionHeading}</h2>
             </div>
             <CustomCaruosel>
-                {Events?.map((item: any, index: number) => (
+                {Events?.map((item: IEvent, index: number) => (
                     <CarouselItem key={index} className={`md:basis-1/2 lg:basis-1/3 xl:basis-1/4`}>
                         <CustomEventCard data={item} />
                     </CarouselItem>
