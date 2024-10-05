@@ -2,26 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Modern & Minimalist Theme */
+    --background: rgb(255, 255, 255); /* White */
+    --secondary-background: rgb(245, 245, 245); /* Smoke white */
+    --foreground: 240 10% 3.9%; /* Dark Grey */
+    --card: 0 0% 100%; /* White for cards */
+    --card-foreground: 240 10% 3.9%; /* Dark Grey text on cards */
+    --popover: 0 0% 100%; /* White popover */
+    --popover-foreground: 240 10% 3.9%; /* Dark Grey text for popovers */
+    --primary: 240 5.9% 10%; /* Cool Blue */
+    --primary-foreground: 0 0% 98%; /* Light Grey/White text for primary */
+    --secondary: 240 4.8% 95.9%; /* Light Grey */
+    --secondary-foreground: 240 5.9% 10%; /* Dark Grey for secondary text */
+    --muted: 240 4.8% 95.9%; /* Light Grey (muted) */
+    --muted-foreground: 240 3.8% 46.1%; /* Medium Grey for muted text */
+    --accent: 240 4.8% 95.9%; /* Vibrant Red (Accent) */
+    --accent-foreground: 240 5.9% 10%; /* Light Grey/White for accent text */
+    --destructive: 0 84.2% 60.2%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 98%; /* Light Grey for destructive text */
+    --border: 240 5.9% 90%; /* Light Grey for borders */
+    --input: 240 5.9% 90%; /* Light Grey for input backgrounds */
+    --ring: 240 10% 3.9%; /* Cool Blue for focus rings */
+    --radius: 0.5rem; /* Border radius for cards and inputs */
+    --chart-1: 12 76% 61%; /* Blue for charts */
+    --chart-2: 173 58% 39%; /* Green for charts */
+    --chart-3: 197 37% 24%; /* Orange for charts */
+    --chart-4: 43 74% 66%; /* Yellow for charts */
+    --chart-5: 27 87% 67%; /* Red for charts */
+  }
+
+  .dark {
+    /* Dark Mode - Modern & Minimalist */
+    --background: 240 10% 3.9%; /* Dark Grey */
+    --secondary-background: rgb(0, 0, 0); /* White */
+    --foreground: 0 0% 98%; /* Light Grey */
+    --card: 240 10% 3.9%; /* Dark Grey for cards */
+    --card-foreground: 0 0% 98%; /* Light Grey text on cards */
+    --popover: 240 10% 3.9%; /* Dark Grey for popovers */
+    --popover-foreground: 0 0% 98%; /* Light Grey text for popovers */
+    --primary: 0 0% 98%; /* Cool Blue */
+    --primary-foreground: 240 5.9% 10%; /* Light Grey/White text for primary */
+    --secondary: 240 3.7% 15.9%; /* Darker Grey for secondary */
+    --secondary-foreground: 0 0% 98%; /* Light Grey for secondary text */
+    --muted: 240 3.7% 15.9%; /* Darker Grey (muted) */
+    --muted-foreground: 240 5% 64.9%; /* Lighter Grey for muted text */
+    --accent: 240 3.7% 15.9%; /* Vibrant Red (Accent) */
+    --accent-foreground: 0 0% 98%; /* Light Grey/White for accent text */
+    --destructive: 0 62.8% 30.6%; /* Dark Red for destructive actions */
+    --destructive-foreground: 0 0% 98%; /* Light Grey for destructive text */
+    --border: 240 3.7% 15.9%; /* Dark Grey for borders */
+    --input: 240 3.7% 15.9%; /* Dark Grey for inputs */
+    --ring: 240 4.9% 83.9%; /* Cool Blue for focus rings */
+    --chart-1: 220 70% 50%; /* Blue for charts */
+    --chart-2: 160 60% 45%; /* Green for charts */
+    --chart-3: 30 80% 55%; /* Orange for charts */
+    --chart-4: 280 65% 60%; /* Yellow for charts */
+    --chart-5: 340 75% 55%; /* Red for charts */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .main-container {
+    @apply px-8 max-w-[1480px] m-auto;
   }
 }
