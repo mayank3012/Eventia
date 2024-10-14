@@ -1,18 +1,7 @@
 "use client"
 import EventsCuoreselSection from "@/components/shared/EventsCuoreselSection";
 import Loader from "@/components/shared/Loader";
-import { IEvent } from "@/lib/interfaces/IEventsData";
 import { Suspense } from "react";
-
-
-type Repo = {
-  sportsEvents: IEvent[],
-  techEvents: IEvent[],
-  healthEvents: IEvent[],
-  artEvents: IEvent[],
-  bussinessEvents: IEvent[]
-}
-
 
 export default function Home() {
   return (
