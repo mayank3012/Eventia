@@ -81,6 +81,6 @@ body {
     @apply bg-background text-foreground;
   }
   .main-container {
-    @apply px-8 max-w-[1480px] m-auto;
+    @apply px-2 sm:px-8 max-w-[1480px] m-auto;
   }
 }

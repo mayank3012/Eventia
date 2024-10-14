@@ -19,7 +19,7 @@ export const EventData: IEventsData = {
                 "phone": "+1-555-668-3010"
             },
             "ticketsAvailable": false,
-            "price": 85.12,
+            "price": 8500.12,
             "imageUrl": "https://example.com/images/technology_event_1.jpg",
             "rating": 3.9,
             "createdBy": "Author 1",

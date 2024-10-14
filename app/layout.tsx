@@ -38,7 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavBar />
-          <div className="pt-20 main-container h-[2000px]">
+          <div className="pt-20 main-container">
             {children}
           </div>
         </ThemeProvider>

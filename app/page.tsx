@@ -1,8 +1,8 @@
 "use client"
 import EventsCuoreselSection from "@/components/shared/EventsCuoreselSection";
-import { EventData } from "@/lib/data/eventsData";
+import Loader from "@/components/shared/Loader";
 import { IEvent } from "@/lib/interfaces/IEventsData";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 
 
 type Repo = {
@@ -15,53 +15,38 @@ type Repo = {
 
 
 export default function Home() {
-
-  const [events, setEvents] = useState<Repo>({
-    sportsEvents: [],
-    techEvents: [],
-    artEvents: [],
-    healthEvents: [],
-    bussinessEvents: []
-  });
-
-  useEffect(() => {
-    const sportsEvents = EventData.events.filter((e: IEvent) => e.category == 'Sports').slice(0, 10);
-    const artEvents = EventData.events.filter((e: IEvent) => e.category == 'Art').slice(0, 10);
-    const bussinessEvents = EventData.events.filter((e: IEvent) => e.category == 'Bussiness').slice(0, 10);
-    const techEvents = EventData.events.filter((e: IEvent) => e.category == 'Technology').slice(0, 10);
-    const healthEvents = EventData.events.filter((e: IEvent) => e.category == 'Health').slice(0, 10);
-    setEvents({
-      sportsEvents,
-      techEvents,
-      artEvents,
-      healthEvents,
-      bussinessEvents
-    });
-  }, []);
-
-
   return (
     <div>
-      <EventsCuoreselSection
-        Events={events.sportsEvents}
-        SectionHeading="Sports"
-      />
-      <EventsCuoreselSection
-        Events={events.techEvents}
-        SectionHeading="Technology"
-      />
-      <EventsCuoreselSection
-        Events={events.sportsEvents}
-        SectionHeading="Art"
-      />
-      <EventsCuoreselSection
-        Events={events.sportsEvents}
-        SectionHeading="Health"
-      />
-      <EventsCuoreselSection
-        Events={events.sportsEvents}
-        SectionHeading="Bussiness"
-      />
+      <Suspense fallback={<Loader />}>
+        <EventsCuoreselSection
+          SectionHeading="Sports"
+          EventKey="Sports"
+        />
+      </Suspense>
+      <Suspense fallback={<Loader />}>
+        <EventsCuoreselSection
+          EventKey="Technology"
+          SectionHeading="Technology"
+        />
+      </Suspense>
+      <Suspense fallback={<Loader />}>
+        <EventsCuoreselSection
+          EventKey="Art"
+          SectionHeading="Art"
+        />
+      </Suspense>
+      <Suspense fallback={<Loader />}>
+        <EventsCuoreselSection
+          EventKey="Health"
+          SectionHeading="Health"
+        />
+      </Suspense>
+      <Suspense fallback={<Loader />}>
+        <EventsCuoreselSection
+          EventKey="Business"
+          SectionHeading="Bussiness"
+        />
+      </Suspense>
     </div>
   );
 }

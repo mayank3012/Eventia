@@ -14,9 +14,9 @@ const CustomCaruosel = ({ children }: { children: React.ReactNode }) => {
             opts={{
                 align: "start",
             }}
-            className="w-full  lg:w-[95%] m-auto"
+            className="w-full lg:w-[95%] m-auto"
         >
-            <CarouselContent>
+            <CarouselContent className='ml-0 pr-6 md:pr-10 lg:pr-0'>
                 {children}
             </CarouselContent>
             <CarouselPrevious className='hidden lg:flex' />
