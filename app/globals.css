@@ -45,7 +45,7 @@ body {
 
   .dark {
     /* Dark Mode - Modern & Minimalist */
-    --background: 240 10% 3.9%; /* Dark Grey */
+    --background: rgb(0, 0, 0); /* Dark Grey */
     --secondary-background: rgb(0, 0, 0); /* White */
     --foreground: 0 0% 98%; /* Light Grey */
     --card: 240 10% 3.9%; /* Dark Grey for cards */
@@ -82,5 +82,8 @@ body {
   }
   .main-container {
     @apply px-2 sm:px-8 max-w-[1480px] m-auto;
+  }
+  .secondary-text {
+    @apply text-gray-700 dark:text-gray-400
   }
 }

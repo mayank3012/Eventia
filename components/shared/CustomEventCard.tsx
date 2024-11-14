@@ -32,7 +32,7 @@ const CustomEventCard = ({ className = "", data }: IProp) => {
                 </div>
                 <div>
                     <h2 className='text-xl font-bold line-clamp-2' title={data.title}>{data.title}</h2>
-                    <div className='text-gray-700 font-semibold max-w-full whitespace-nowrap capitalize overflow-hidden text-ellipsis' title={data.keywords?.join('/')}>{data.keywords?.join('/')}</div>
+                    <div className='secondary-text font-semibold max-w-full whitespace-nowrap capitalize overflow-hidden text-ellipsis' title={data.keywords?.join('/')}>{data.keywords?.join('/')}</div>
                 </div>
             </CardContent>
         </Card >
