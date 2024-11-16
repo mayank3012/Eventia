@@ -1,33 +1,47 @@
+"use server"
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/dbConnect';
-import User from '@/lib/models/User';
+import { User } from '@/lib/models/User';
+import bcrypt from 'bcrypt'
 
 export async function POST(req: Request) {
+    const { name, email, password, phoneNumber} = await req.json();
+    // Check if all fields are provided
+    if (!name || !email || !password || !phoneNumber) {
+        return NextResponse.json({ success: false, message: 'All fields are required' });
+    }
     try {
-        const { name, email, password } = await req.json();
-
-        if (!name || !email || !password) {
-            return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
-        }
-
         await connectToDatabase();
-
+        // Check if the email is already in use
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return NextResponse.json({ error: 'User already exists' }, { status: 400 });
+            return NextResponse.json({ success: false, message: 'Email already in use' });
+        }
+        const existingUserMobile = await User.findOne({ phoneNumber });
+        if (existingUserMobile) {
+            return NextResponse.json({ success: false, message: 'Phone no. already in use' });
         }
 
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
         const newUser = new User({
             name,
             email,
-            password, // Hash the password in production
+            password: hashedPassword,
+            phoneNumber,
+            createdDate: new Date(),
+            emailConfirmed: false,  // Set as false initially, to confirm after email verification
+            loginCount: 0,
         });
 
+        // Save the user to the database
         await newUser.save();
 
-        return NextResponse.json({ message: 'User registered successfully' }, { status: 201 });
+        return NextResponse.json({ success: true, message: 'User registered successfully!' });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ success: false, message: 'An error occurred during registration' });
     }
 }

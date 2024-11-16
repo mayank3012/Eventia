@@ -16,6 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Link from 'next/link';
 import { registerUserSchema } from '@/lib/schema/RegisterUserSchema';
+import { IApiRequest } from '@/lib/interfaces/IApiRequest';
+import { PerformApiCall } from '@/lib/utils';
+import { routes } from '@/lib/ApiRoutes';
 
 
 export default function SignUpPage() {
@@ -32,10 +35,19 @@ export default function SignUpPage() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof registerUserSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        alert(`Hello ${values.name}`);
+    const onSubmit = async (values: z.infer<typeof registerUserSchema>) => {
+        const request: IApiRequest = {
+            url: routes.register,
+            method:'POST',
+            body: JSON.stringify(values),
+        }
+        const response = await PerformApiCall(request);
+        if(response.success){
+            alert('Registered Successfully');
+        }
+        else{
+            alert(response.message);
+        }
     }
     return (
         <div className="flex items-center justify-center ">
@@ -126,7 +138,7 @@ export default function SignUpPage() {
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-600 mt-2">
                             Already have an account?{' '}
-                            <Link href="signIn" className="text-indigo-600 hover:underline">Sign in</Link>
+                            <Link href="auth/signIn" className="text-indigo-600 hover:underline">Sign in</Link>
                         </p>
                     </div>
                 </CardContent>

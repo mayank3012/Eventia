@@ -15,8 +15,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Link from 'next/link';
-
-
+import {signIn} from 'next-auth/react';
 // Define the schema with Zod
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -35,10 +34,19 @@ export default function LoginPage() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof loginSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        alert(`Hello ${values.email}`);
+    const onSubmit = async (values: z.infer<typeof loginSchema>)=> {
+        const result = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+        });
+
+        if (result?.error) {
+        alert("Invalid email or password");
+        } else {
+        alert("");
+        // Optionally redirect here or show success message
+        }
     }
     return (
         <div className="flex items-center justify-center ">
@@ -48,7 +56,7 @@ export default function LoginPage() {
                         Sign in to your account
                     </CardTitle>
                 </CardHeader>
-
+ 
                 <CardContent>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -83,9 +91,11 @@ export default function LoginPage() {
                             <Button type="submit" className="w-full">
                                 Sign In
                             </Button>
+                            
+
                         </form>
                     </Form>
-
+                    <button onClick={() => signIn("google")}>Sign in with Google</button>
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-600">
                             Forgot your password?{' '}
@@ -93,7 +103,7 @@ export default function LoginPage() {
                         </p>
                         <p className="text-sm text-gray-600 mt-2">
                             Don&apos;t have an account?{' '}
-                            <Link href="signUp" className="text-indigo-600 hover:underline">Sign up</Link>
+                            <Link href="auth/signUp" className="text-indigo-600 hover:underline">Sign up</Link>
                         </p>
                     </div>
                 </CardContent>

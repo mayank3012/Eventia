@@ -11,7 +11,7 @@ interface IProps{
 const NavProfile = ({onSearchClick}:IProps) => {
     const router = useRouter();
     const onSignInClick = () => {
-        router.push("/signIn")
+        router.push("/auth/signIn")
     }
     return (
         <>
