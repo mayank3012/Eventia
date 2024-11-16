@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import Link from 'next/link';
 import {signIn} from 'next-auth/react';
+import Loader from '@/components/shared/Loader';
+import { useRouter } from 'next/navigation';
+import {useSession} from 'next-auth/react';
 // Define the schema with Zod
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -24,6 +27,13 @@ const loginSchema = z.object({
 
 
 export default function LoginPage() {
+    const {status} = useSession();
+    const [showSpinner, setShowSpinner] = useState(false);
+    const router = useRouter();
+
+    if(status=="authenticated"){
+        router.push("/");
+    }
     // 1. Define your form.
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -35,6 +45,7 @@ export default function LoginPage() {
 
     // 2. Define a submit handler.
     const onSubmit = async (values: z.infer<typeof loginSchema>)=> {
+        setShowSpinner(true);
         const result = await signIn("credentials", {
         redirect: false,
         email: values.email,
@@ -44,12 +55,20 @@ export default function LoginPage() {
         if (result?.error) {
         alert("Invalid email or password");
         } else {
-        alert("");
+        router.push("/");
         // Optionally redirect here or show success message
         }
+        setShowSpinner(false);
     }
     return (
         <div className="flex items-center justify-center ">
+            {
+                showSpinner?
+                <div className="w-full h-screen bg-[rgba(255,255,255,0.8)] dark:bg-[rgba(0,0,0,0.8)] flex justify-center items-center absolute z-20">
+                    <Loader />
+                </div>
+                :null
+            }
             <Card className="w-full max-w-md p-4 shadow-md mt-[10vh]">
                 <CardHeader>
                     <CardTitle className="text-center text-2xl font-bold text-primary">
@@ -103,7 +122,7 @@ export default function LoginPage() {
                         </p>
                         <p className="text-sm text-gray-600 mt-2">
                             Don&apos;t have an account?{' '}
-                            <Link href="auth/signUp" className="text-indigo-600 hover:underline">Sign up</Link>
+                            <Link href="/auth/signUp" className="text-indigo-600 hover:underline">Sign up</Link>
                         </p>
                     </div>
                 </CardContent>

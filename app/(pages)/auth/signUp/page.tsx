@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,9 +19,19 @@ import { registerUserSchema } from '@/lib/schema/RegisterUserSchema';
 import { IApiRequest } from '@/lib/interfaces/IApiRequest';
 import { PerformApiCall } from '@/lib/utils';
 import { routes } from '@/lib/ApiRoutes';
+import { useRouter } from 'next/navigation';
+import Loader from '@/components/shared/Loader';
+import { useSession } from 'next-auth/react';
 
 
 export default function SignUpPage() {
+    const {status} = useSession();
+    const [showSpinner, setShowSpinner] = useState(false);
+    const router = useRouter();
+
+    if(status=="authenticated"){
+        router.push("/");
+    }
     // 1. Define your form.
     const form = useForm<z.infer<typeof registerUserSchema>>({
         resolver: zodResolver(registerUserSchema),
@@ -36,6 +46,7 @@ export default function SignUpPage() {
 
     // 2. Define a submit handler.
     const onSubmit = async (values: z.infer<typeof registerUserSchema>) => {
+        setShowSpinner(true);
         const request: IApiRequest = {
             url: routes.register,
             method:'POST',
@@ -43,14 +54,22 @@ export default function SignUpPage() {
         }
         const response = await PerformApiCall(request);
         if(response.success){
-            alert('Registered Successfully');
+            router.push("/auth/signIn");
         }
         else{
             alert(response.message);
         }
+        setShowSpinner(false);
     }
     return (
         <div className="flex items-center justify-center ">
+            {
+                showSpinner?
+                <div className="w-full h-screen bg-[rgba(255,255,255,0.8)] dark:bg-[rgba(0,0,0,0.8)] flex justify-center items-center absolute z-20">
+                    <Loader />
+                </div>
+                :null
+            }
             <Card className="w-full max-w-md p-4 shadow-md mt-[10vh]">
                 <CardHeader>
                     <CardTitle className="text-center text-2xl font-bold text-primary">
@@ -138,7 +157,7 @@ export default function SignUpPage() {
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-600 mt-2">
                             Already have an account?{' '}
-                            <Link href="auth/signIn" className="text-indigo-600 hover:underline">Sign in</Link>
+                            <Link href="/auth/signIn" className="text-indigo-600 hover:underline">Sign in</Link>
                         </p>
                     </div>
                 </CardContent>
